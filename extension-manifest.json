@@ -1,0 +1,61 @@
+{
+    "manifestVersion": 1,
+    "id": "cake-build-tasks",
+    "name": "Cake Build Tasks",
+    "version": "0.0.1",
+    "publisher": "cake-build",
+    "description": "Tools for building with Cake.",
+    "categories": [
+        "Build and release"
+    ],
+    "icons": {
+        "default": "extension-icon.png"
+    },
+    "files": [
+        {
+            "path": "Task"
+        }
+    ],
+    "content": {
+        "details":
+        {
+            "path": "extension-details.md"
+        }
+    },
+    "links": {
+        "home": {
+            "uri": "http://cakebuild.net"
+        },
+        "getstarted": {
+            "uri": "http://cakebuild.net/docs/vso-build-task"
+        },
+        "learn": {
+            "uri": "https://cakebuild.net/docs"
+        },
+        "issues": {
+            "uri": "https://github.com/cake-build/cake-vso/issues"
+        },
+        "license": {
+            "uri": "https://github.com/cake-build/cake-vso/blob/develop/LICENSE"
+        },
+        "repository": {
+            "uri": "https://github.com/cake-build/cake-vso"
+        }
+    },
+    "branding": {
+        "color": "rgb(67, 32, 16)",
+        "theme": "light"
+    },
+    "contributions": [
+        {
+            "id": "cake-build-task",
+            "type": "ms.vss-distributed-task.task",
+            "targets": [
+                "ms.vss-distributed-task.tasks"
+            ],
+            "properties": {
+                "name": "Task"
+            }
+        }
+    ]
+}
