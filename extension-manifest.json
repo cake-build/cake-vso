@@ -5,6 +5,7 @@
     "version": "0.0.1",
     "publisher": "cake-build",
     "description": "Tools for building with Cake.",
+    "public": true,
     "categories": [
         "Build and release"
     ],
