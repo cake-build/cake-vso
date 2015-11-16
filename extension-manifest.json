@@ -27,10 +27,10 @@
             "uri": "http://cakebuild.net"
         },
         "getstarted": {
-            "uri": "http://cakebuild.net/docs/vso-build-task"
+            "uri": "http://cakebuild.net/docs/build-systems/vso"
         },
         "learn": {
-            "uri": "https://cakebuild.net/docs"
+            "uri": "http://cakebuild.net/docs"
         },
         "issues": {
             "uri": "https://github.com/cake-build/cake-vso/issues"
@@ -39,12 +39,12 @@
             "uri": "https://github.com/cake-build/cake-vso/blob/develop/LICENSE"
         },
         "repository": {
-            "uri": "https://github.com/cake-build/cake-vso"
+            "uri": "http://github.com/cake-build/cake-vso"
         }
     },
     "branding": {
-        "color": "rgb(67, 32, 16)",
-        "theme": "light"
+        "color": "rgb(102, 47, 24)",
+        "theme": "dark"
     },
     "contributions": [
         {
