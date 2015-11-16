@@ -2,12 +2,20 @@
     "manifestVersion": 1,
     "id": "cake-build-tasks",
     "name": "Cake Build Tasks",
-    "version": "0.0.1",
+    "version": "0.1.0",
     "publisher": "cake-build",
     "description": "Tools for building with Cake.",
     "public": true,
     "categories": [
         "Build and release"
+    ],
+    "tags": [
+      "cake", "cake build", "build", "scripting"
+    ],
+    "screenshots": [
+        {
+            "path": "Images/configurebuildstep-screenshot.png"
+        }
     ],
     "icons": {
         "default": "extension-icon.png"
@@ -15,6 +23,10 @@
     "files": [
         {
             "path": "Task"
+        },
+        {
+            "path": "Images",
+            "addressable": true
         }
     ],
     "content": {
