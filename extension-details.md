@@ -1,5 +1,5 @@
-Cake - Team Build Custom Steps
-==============================
+Cake Build Task
+===============
 
 This extension contains a custom build task that runs Cake build scripts for you.
 
@@ -15,7 +15,7 @@ How to use the build task
 
 After installing this extension, a new task will become available called "Cake Task" when you add a new build step for a build definition.
 
-![Add Custom Build Step](Images/addbuildstep.png)
+![Add Cake Task](Images/addtasks.png)
 
 By default, the Cake build step (when added to a build) will try to run the `build.cake` build script (found in the root of your repository) with the target `Default`. If you wish to run another build script or build target you can change this in the build step settings.
 
