@@ -25,6 +25,10 @@ if (!(Test-Path $nuGetPath)) {
   Throw "Could not locate NuGet.exe"
 }
 
+# Set the NUGET_EXE environment variable.
+# This is a way of telling Cake where to find nuget.exe.
+$ENV:NUGET_EXE = $nuGetPath;
+
 # Check if there's a tools directory.
 if (!(Test-Path $toolsPath)) {
     Write-Verbose -Message "Creating tools directory..."
