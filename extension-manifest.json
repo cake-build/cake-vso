@@ -1,7 +1,7 @@
 {
     "manifestVersion": 1,
-    "id": "cake-build-tasks",
-    "name": "Cake Build Tasks",
+    "id": "cake",
+    "name": "Cake",
     "version": "0.1.0",
     "publisher": "cake-build",
     "description": "Tools for building with Cake.",
