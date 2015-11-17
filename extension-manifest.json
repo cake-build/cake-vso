@@ -2,7 +2,7 @@
     "manifestVersion": 1,
     "id": "cake",
     "name": "Cake",
-    "version": "0.1.0",
+    "version": "0.1.6",
     "publisher": "cake-build",
     "description": "Tools for building with Cake.",
     "public": true,
