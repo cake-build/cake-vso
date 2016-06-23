@@ -15,8 +15,8 @@ foreach($key in $PSBoundParameters.Keys)
 import-module "Microsoft.TeamFoundation.DistributedTask.Task.Internal";
 import-module "Microsoft.TeamFoundation.DistributedTask.Task.Common";
 
-$repositoryPath = $env:BUILD_REPOSITORY_LOCALPATH;
-$toolsPath = Join-Path $repositoryPath "tools";
+$rootPath = Split-Path -parent $script;
+$toolsPath = Join-Path $rootPath "tools";
 $packagePath = Join-Path $toolsPath "packages.config";
 $cakePath = Join-Path $toolsPath "Cake/Cake.exe";
 $nuGetPath = Join-Path $toolsPath "nuget.exe";
@@ -62,4 +62,4 @@ if (!(Test-Path $cakePath)) {
 }
 
 # Start Cake
-Invoke-Tool -Path $cakePath -Arguments "`"$script`" -target=`"$target`" -verbosity=`"$verbosity`" $arguments";
+Invoke-Tool -Path $cakePath -Arguments "`"$script`" -target=`"$target`" -verbosity=`"$verbosity`" --paths_tools=`"$toolsPath`" $arguments";
