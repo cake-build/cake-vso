@@ -1,5 +1,5 @@
-Cake Build Tasks
-================
+Cake
+====
 
 This extension contains a custom build task that runs Cake build scripts for you.
 
