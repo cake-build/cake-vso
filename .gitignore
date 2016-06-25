@@ -1,1 +1,9 @@
 *.vsix
+
+# Build related
+build-results/
+tools/Cake/
+tools/nuget.exe
+tools/gitreleasemanager/
+tools/GitVersion.CommandLine/
+tools/Addins/
