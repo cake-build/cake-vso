@@ -59,7 +59,7 @@ public class BuildParameters
             }.Any(
                 releaseTarget => StringComparer.OrdinalIgnoreCase.Equals(releaseTarget, target)
             ),
-            IsReleaseBuild = new [] {
+            IsReleaseBuild = new string[] {
             }.Any(
                 publishTarget => StringComparer.OrdinalIgnoreCase.Equals(publishTarget, target)
             ),
