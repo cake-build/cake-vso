@@ -71,7 +71,7 @@ Task("Create-Release-Notes")
     });
 });
 
-Task("Update-Project-Json-Version")
+Task("Update-Json-Versions")
     .Does(() =>
 {
     var projectToPackagePackageJson = "extension-manifest.json";
@@ -80,10 +80,25 @@ Task("Update-Project-Json-Version")
     TransformConfig(projectToPackagePackageJson, projectToPackagePackageJson, new TransformationCollection {
         { "version", parameters.Version.SemVersion }
     });
+
+    var taskJson = "Task/task.json";
+    Information("Updating {0} version -> {1}", taskJson, parameters.Version.SemVersion);
+
+    TransformConfig(taskJson, taskJson, new TransformationCollection {
+        { "version/Major", parameters.Version.Major }
+    });
+
+    TransformConfig(taskJson, taskJson, new TransformationCollection {
+        { "version/Minor", parameters.Version.Minor }
+    });
+
+    TransformConfig(taskJson, taskJson, new TransformationCollection {
+        { "version/Patch", parameters.Version.Patch }
+    });
 });
 
 Task("Package-Extension")
-    .IsDependentOn("Update-Project-Json-Version")
+    .IsDependentOn("Update-Json-Versions")
     .IsDependentOn("Install-Tfx-Cli")
     .IsDependentOn("Clean")
     .Does(() =>
