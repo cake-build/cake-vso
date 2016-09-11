@@ -4,6 +4,9 @@ public class BuildVersion
     public string SemVersion { get; private set; }
     public string Milestone { get; private set; }
     public string CakeVersion { get; private set; }
+    public string Major { get; private set; }
+    public string Minor { get; private set; }
+    public string Patch { get; private set; }
 
     public static BuildVersion CalculatingSemanticVersion(
         ICakeContext context,
@@ -18,6 +21,9 @@ public class BuildVersion
         string version = null;
         string semVersion = null;
         string milestone = null;
+        string major = null;
+        string minor = null;
+        string patch = null;
 
         if (context.IsRunningOnWindows() && !parameters.SkipGitVersion)
         {
@@ -31,6 +37,9 @@ public class BuildVersion
                 version = context.EnvironmentVariable("GitVersion_MajorMinorPatch");
                 semVersion = context.EnvironmentVariable("GitVersion_LegacySemVerPadded");
                 milestone = string.Concat("v", version);
+                major = context.EnvironmentVariable("GitVersion_Major");
+                minor = context.EnvironmentVariable("GitVersion_Minor");
+                patch = context.EnvironmentVariable("GitVersion_Patch");
             }
 
             GitVersion assertedVersions = context.GitVersion(new GitVersionSettings
@@ -41,6 +50,9 @@ public class BuildVersion
             version = assertedVersions.MajorMinorPatch;
             semVersion = assertedVersions.LegacySemVerPadded;
             milestone = string.Concat("v", version);
+            major = assertedVersions.Major.ToString();
+            minor = assertedVersions.Minor.ToString();
+            patch = assertedVersions.Patch.ToString();
 
             context.Information("Calculated Semantic Version: {0}", semVersion);
         }
@@ -61,7 +73,10 @@ public class BuildVersion
             Version = version,
             SemVersion = semVersion,
             Milestone = milestone,
-            CakeVersion = cakeVersion
+            CakeVersion = cakeVersion,
+            Major = major,
+            Minor = minor,
+            Patch = patch
         };
     }
 }
