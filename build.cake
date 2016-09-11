@@ -10,7 +10,7 @@
 // TOOLS
 //////////////////////////////////////////////////////////////////////
 
-#tool "nuget:?package=gitreleasemanager&version=0.4.0"
+#tool "nuget:?package=gitreleasemanager&version=0.5.0"
 #tool "nuget:?package=GitVersion.CommandLine&version=3.4.1"
 
 // Load other scripts.
