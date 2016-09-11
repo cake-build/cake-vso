@@ -119,7 +119,7 @@ Task("Publish-Extension")
     .Does(() =>
 {
     var buildResultDir = Directory("./build-results");
-    var packageFile = File("cake-vscode-" + parameters.Version.SemVersion + ".vsix");
+    var packageFile = File("cake-build.cake-" + parameters.Version.SemVersion + ".vsix");
 
     TfxExtensionPublish(buildResultDir + packageFile, new List<string>{ "account1" }, new TfxExtensionPublishSettings()
     {
