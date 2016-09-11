@@ -121,7 +121,7 @@ Task("Publish-Extension")
     var buildResultDir = Directory("./build-results");
     var packageFile = File("cake-build.cake-" + parameters.Version.SemVersion + ".vsix");
 
-    TfxExtensionPublish(buildResultDir + packageFile, new List<string>{ "account1" }, new TfxExtensionPublishSettings()
+    TfxExtensionPublish(buildResultDir + packageFile, new List<string>{ "cake-build" }, new TfxExtensionPublishSettings()
     {
         AuthType = TfxAuthType.Pat,
         Token = parameters.Marketplace.Token
