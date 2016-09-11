@@ -16,7 +16,17 @@ public class BuildParameters
     public bool IsReleaseBuild { get; private set; }
     public bool SkipGitVersion { get; private set; }
     public BuildCredentials GitHub { get; private set; }
+    public VisualStudioMarketplaceCredentials Marketplace { get; private set; }
     public BuildVersion Version { get; private set; }
+
+    public bool ShouldPublish
+    {
+        get
+        {
+            return !IsLocalBuild && !IsPullRequest && IsMasterCakeVsoRepo
+                && IsMasterCakeVsoBranch && IsTagged;
+        }
+    }
 
     public void SetBuildVersion(BuildVersion version)
     {
@@ -53,6 +63,9 @@ public class BuildParameters
                 userName: context.EnvironmentVariable("CAKEVSO_GITHUB_USERNAME"),
                 password: context.EnvironmentVariable("CAKEVSO_GITHUB_PASSWORD")
             ),
+            Marketplace = new VisualStudioMarketplaceCredentials (
+                token: context.EnvironmentVariable("CAKEVSO_VSMARKETPLACE_TOKEN")
+            ),
             IsPublishBuild = new [] {
                 "ReleaseNotes",
                 "Create-Release-Notes"
@@ -77,5 +90,15 @@ public class BuildCredentials
     {
         UserName = userName;
         Password = password;
+    }
+}
+
+public class VisualStudioMarketplaceCredentials
+{
+    public string Token { get; private set; }
+
+    public VisualStudioMarketplaceCredentials(string token)
+    {
+        Token = token;
     }
 }
