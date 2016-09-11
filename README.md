@@ -8,7 +8,7 @@ Cake (C# Make) is a cross platform build automation system with a C# DSL to do t
 Run Cake scripts easily
 -----------------------
 
-The Cake VSO build tasks makes it easy to run a Cake script directly without having to invoke PowerShell or other commands line scripts. This makes it easy even for team members not familiar with Cake to add or adjust parameters passed to your build scripts.
+The Cake VSTS build tasks makes it easy to run a Cake script directly without having to invoke PowerShell or other commands line scripts. This makes it easy even for team members not familiar with Cake to add or adjust parameters passed to your build scripts.
 
 How to use the build task
 -------------------------
