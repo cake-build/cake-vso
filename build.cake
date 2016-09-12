@@ -10,7 +10,7 @@
 // TOOLS
 //////////////////////////////////////////////////////////////////////
 
-#tool "nuget:?package=gitreleasemanager&version=0.5.0"
+#tool "nuget:?package=gitreleasemanager&version=0.6.0"
 #tool "nuget:?package=GitVersion.CommandLine&version=3.4.1"
 
 // Load other scripts.
@@ -57,7 +57,7 @@ Task("Clean")
 Task("Install-Tfx-Cli")
     .Does(() =>
 {
-    Npm.Install(settings => settings.Package("tfx-cli").Globally());
+    Npm.WithLogLevel(NpmLogLevel.Silent).FromPath(".").Install(settings => settings.Package("tfx-cli").Globally());
 });
 
 Task("Create-Release-Notes")
