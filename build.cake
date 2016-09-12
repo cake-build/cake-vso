@@ -57,7 +57,7 @@ Task("Clean")
 Task("Install-Tfx-Cli")
     .Does(() =>
 {
-    Npm.Install(settings => settings.Package("tfx-cli").Globally());
+    Npm.WithLogLevel(NpmLogLevel.Silent).FromPath(".").Install(settings => settings.Package("tfx-cli").Globally());
 });
 
 Task("Create-Release-Notes")
