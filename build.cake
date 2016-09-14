@@ -36,6 +36,12 @@ Setup(context =>
         )
     );
 
+    // Increase verbosity?
+    if(parameters.IsMasterCakeVsoBranch && (context.Log.Verbosity != Verbosity.Diagnostic)) {
+        Information("Increasing verbosity to diagnostic.");
+        context.Log.Verbosity = Verbosity.Diagnostic;
+    }
+
     Information("Building version {0} of cake-vso ({1}, {2}) using version {3} of Cake. (IsTagged: {4})",
         parameters.Version.SemVersion,
         parameters.Configuration,
