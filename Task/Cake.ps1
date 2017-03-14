@@ -2,13 +2,22 @@ Param(
     [string]$Script,
     [string]$Target,
     [string]$Verbosity,
-    [string]$Arguments
+    [string]$Arguments,
+    [string]$useBuildAgentNuGetExe,
+    [string]$nugetExeDownloadLocation,
+    [string]$ToolFeedUrl
 )
 
 Write-Verbose "Parameters:";
 foreach($key in $PSBoundParameters.Keys)
 {
     Write-Verbose ($key + ' = ' + $PSBoundParameters[$key]);
+}
+
+try {
+  $useBuildAgentNuGetExeBool = [System.Convert]::ToBoolean($useBuildAgentNuGetExe) 
+} catch [FormatException] {
+  $useBuildAgentNuGetExeBool = $false
 }
 
 Import-Module "Microsoft.TeamFoundation.DistributedTask.Task.Internal";
@@ -37,11 +46,24 @@ if (!(Test-Path $ToolPath)) {
     }
 }
 
+if($useBuildAgentNuGetExeBool)
+{
+    Write-Host "Using Build Agent nuget.exe";
+    $nugetExeDownloadLocation = Get-ToolPath -Name 'NuGet.exe';
+}
+
 # Make sure NuGet exist.
 if (!(Test-Path $NuGetPath)) {
   # Download NuGet.exe.
-  Write-Verbose "Downloading nuget.exe...";
-  (New-Object System.Net.WebClient).DownloadFile("https://nuget.org/nuget.exe", $NuGetPath);
+  # Reset $NuGetPath incase we changed it above.
+  $NuGetPath = Join-Path $ToolPath "nuget.exe";
+  
+  # If we haven't been given a custom nuget.exe download location then download the latest version from nuget.org.
+  if($nugetExeDownloadLocation -eq "") {
+      $nugetExeDownloadLocation = "https://dist.nuget.org/win-x86-commandline/latest/nuget.exe"
+  }
+  Write-Verbose "Getting nuget.exe from $nugetExeDownloadLocation"
+  (New-Object System.Net.WebClient).DownloadFile($nugetExeDownloadLocation, $NuGetPath);
   # Make sure it was properly downloaded.
   if (!(Test-Path $NuGetPath)) {
       Throw "Could not find nuget.exe";
@@ -54,12 +76,20 @@ Set-Location $ToolPath;
 if ((Test-Path $PackagePath)) {
   # Install tools in packages.config.
   Write-Host "Restoring packages...";
-  Invoke-Expression "$NuGetPath install `"$PackagePath`" -ExcludeVersion -OutputDirectory `"$ToolPath`"";
+  if($ToolFeedUrl -ne ""){
+      Invoke-Expression "$NuGetPath install `"$PackagePath`" -ExcludeVersion -OutputDirectory `"$ToolPath`" -Source $ToolFeedUrl";
+  }else{
+      Invoke-Expression "$NuGetPath install `"$PackagePath`" -ExcludeVersion -OutputDirectory `"$ToolPath`"";
+  }
 }
 if (!(Test-Path $CakePath)) {
   # Install Cake if not part of packages.config.
   Write-Host "Installing Cake...";
-  Invoke-Expression "$NuGetPath install Cake -ExcludeVersion -OutputDirectory `"$ToolPath`"";
+  if($ToolFeedUrl -ne ""){
+      Invoke-Expression "$NuGetPath install Cake -ExcludeVersion -OutputDirectory `"$ToolPath`" -Source $ToolFeedUrl";
+  }else{
+      Invoke-Expression "$NuGetPath install Cake -ExcludeVersion -OutputDirectory `"$ToolPath`"";
+  }
 }
 Pop-Location;
 
