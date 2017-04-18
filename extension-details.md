@@ -23,6 +23,21 @@ By default, the Cake build step (when added to a build) will try to run the `bui
 
 At the moment, only Windows build agents are supported, but we expect to add support for other build agents soon.
 
+Advanced Settings
+----------
+There are several advanced settings that control where the Cake build step downloads tools from.
+
+![Configure Advanced Settings](Images/configureadvanced.png)
+
+### Use the Build Agent Nuget 
+This will use the version of `nuget.exe` shipped with the build agent `<AgentInstallFolder>\agent\Worker\Tools\Nuget.exe` if set. This is set to False by default.
+
+### Nuget Exe Location 
+If not using the Build Agent copy of `nuget.exe` this setting specifies where to download the executable from. This can be a URL e.g. `https://nuget.org/nuget.exe` or a simple folder path such as `D:\Tools\Nuget.exe`. If nothing is set the task will download `nuget.exe` from `https://dist.nuget.org/win-x86-commandline/latest/nuget.exe`  
+
+### Tool Feed URL
+The `cake.exe`, `#addin` and `#tool` packages are by default downloaded from the default nuget.org package feed. You can download these tools from an alternate feed by specifiying it here.
+
 Learn more
 ----------
 

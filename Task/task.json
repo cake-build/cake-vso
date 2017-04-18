@@ -18,30 +18,37 @@
   },
   "minimumAgentVersion": "1.83.0",
   "instanceNameFormat": "Cake $(message)",
+  "groups": [
+    {
+      "name": "advanced",
+      "displayName": "Advanced",
+      "isExpanded": false
+    }
+  ],
   "inputs": [
     {
       "name": "script",
       "type": "filePath",
       "label": "Cake Script",
-      "defaultValue":"build.cake",
+      "defaultValue": "build.cake",
       "helpMarkDown": "The build script to execute.",
-      "required":true
+      "required": true
     },
     {
       "name": "target",
       "type": "string",
       "label": "Target",
-      "defaultValue":"Default",
+      "defaultValue": "Default",
       "helpMarkDown": "The build script target to run.",
-      "required":true
+      "required": true
     },
     {
       "name": "verbosity",
       "type": "pickList",
       "label": "Verbosity",
-      "defaultValue":"Verbose",
+      "defaultValue": "Verbose",
       "helpMarkDown": "Specifies the amount of information to be displayed.",
-      "required":true,
+      "required": true,
       "options": {
         "Quiet": "Quiet",
         "Minimal": "Minimal",
@@ -54,9 +61,36 @@
       "name": "arguments",
       "type": "string",
       "label": "Cake Arguments",
-      "defaultValue":"",
+      "defaultValue": "",
       "helpMarkDown": "Additional arguments passed to Cake.",
-      "required":false
+      "required": false
+    },
+    {
+      "name": "useBuildAgentNuGetExe",
+      "type": "boolean",
+      "label": "Use the Build Agent Nuget",
+      "defaultValue": "false",
+      "required": false,
+      "helpMarkDown": "Use the nuget.exe installed with the build agent.",
+      "groupName": "advanced"
+    },
+    {
+      "name": "nugetExeDownloadLocation",
+      "type": "string",
+      "label": "Nuget Exe Location",
+      "defaultValue": "",
+      "required": false,
+      "helpMarkDown": "Where to fetch the nuget executable from if not using the build agent nuget. Defaults to `https://dist.nuget.org/win-x86-commandline/latest/nuget.exe`",
+      "groupName": "advanced"
+    },
+    {
+      "name": "ToolFeedUrl",
+      "type": "string",
+      "label": "Tool Feed Url",
+      "defaultValue": "",
+      "required": false,
+      "helpMarkDown": "Use an alternate nuget package feed for cake and tools. Defaults to `nuget.org`",
+      "groupName": "advanced"
     }
   ],
   "execution": {
