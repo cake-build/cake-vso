@@ -26,6 +26,8 @@ Import-Module "Microsoft.TeamFoundation.DistributedTask.Task.Common";
 $RootPath = Split-Path -parent $Script;
 $ToolPath = Join-Path $RootPath "tools";
 $PackagePath = Join-Path $ToolPath "packages.config";
+$ModulePath = Join-Path $ToolPath "Modules";
+$ModulePackagePath = Join-Path $ModulePath "packages.config";
 $CakePath = Join-Path $ToolPath "Cake/Cake.exe";
 $NuGetPath = Join-Path $ToolPath "nuget.exe";
 
@@ -33,6 +35,7 @@ Write-Verbose "=============================================="
 Write-Verbose "Root = $RootPath";
 Write-Verbose "Tools = $ToolPath";
 Write-Verbose "Packages = $PackagePath";
+Write-Verbose "Modules = $ModulePath";
 Write-Verbose "Cake = $CakePath";
 Write-Verbose "NuGet = $NuGetPath";
 Write-Verbose "=============================================="
@@ -80,6 +83,15 @@ if ((Test-Path $PackagePath)) {
       Invoke-Expression "$NuGetPath install `"$PackagePath`" -ExcludeVersion -OutputDirectory `"$ToolPath`" -Source $ToolFeedUrl";
   }else{
       Invoke-Expression "$NuGetPath install `"$PackagePath`" -ExcludeVersion -OutputDirectory `"$ToolPath`"";
+  }
+}
+if ((Test-Path $ModulePackagePath)) {
+  # Install tools in Modules/packages.config
+  Write-Host "Installing modules..."
+  if($ToolFeedUrl -ne ""){
+      Invoke-Expression "$NuGetPath install `"$ModulePackagePath`" -ExcludeVersion -OutputDirectory `"$ModulePath`" -Source $ToolFeedUrl";
+  }else{
+      Invoke-Expression "$NuGetPath install `"$ModulePackagePath`" -ExcludeVersion -OutputDirectory `"$ModulePath`"";
   }
 }
 if (!(Test-Path $CakePath)) {
