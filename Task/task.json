@@ -4,7 +4,7 @@
   "friendlyName": "Cake",
   "description": "Build with Cake",
   "author": "Patrik Svensson",
-  "helpMarkDown": "[More Information about Cake](http://cakebuild.net)",
+  "helpMarkDown": "[More Information about Cake](https://cakebuild.net)",
   "category": "Build",
   "visibility": [
     "Build",

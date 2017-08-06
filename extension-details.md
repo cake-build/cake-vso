@@ -41,4 +41,4 @@ The `cake.exe`, `#addin` and `#tool` packages are by default downloaded from the
 Learn more
 ----------
 
-For more information about Cake, please see the [Cake website](http://cakebuild.net) or the Cake [source code repository](https://github.com/cake-build/cake).
+For more information about Cake, please see the [Cake website](https://cakebuild.net) or the Cake [source code repository](https://github.com/cake-build/cake).

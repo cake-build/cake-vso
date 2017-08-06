@@ -42,13 +42,13 @@
     },
     "links": {
         "home": {
-            "uri": "http://cakebuild.net"
+            "uri": "https://cakebuild.net"
         },
         "getstarted": {
-            "uri": "http://cakebuild.net/docs/build-systems/vso"
+            "uri": "https://cakebuild.net/docs/build-systems/vso"
         },
         "learn": {
-            "uri": "http://cakebuild.net/docs"
+            "uri": "https://cakebuild.net/docs"
         },
         "issues": {
             "uri": "https://github.com/cake-build/cake-vso/issues"
