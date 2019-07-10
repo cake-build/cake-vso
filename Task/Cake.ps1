@@ -80,27 +80,27 @@ if ((Test-Path $PackagePath)) {
   # Install tools in packages.config.
   Write-Host "Restoring packages...";
   if($ToolFeedUrl -ne ""){
-      Invoke-Expression "$NuGetPath install `"$PackagePath`" -ExcludeVersion -OutputDirectory `"$ToolPath`" -Source $ToolFeedUrl";
+      Invoke-Expression "&`"$NuGetPath`" install `"$PackagePath`" -ExcludeVersion -OutputDirectory `"$ToolPath`" -Source $ToolFeedUrl";
   }else{
-      Invoke-Expression "$NuGetPath install `"$PackagePath`" -ExcludeVersion -OutputDirectory `"$ToolPath`"";
+      Invoke-Expression "&`"$NuGetPath`" install `"$PackagePath`" -ExcludeVersion -OutputDirectory `"$ToolPath`"";
   }
 }
 if ((Test-Path $ModulePackagePath)) {
   # Install tools in Modules/packages.config
   Write-Host "Installing modules..."
   if($ToolFeedUrl -ne ""){
-      Invoke-Expression "$NuGetPath install `"$ModulePackagePath`" -ExcludeVersion -OutputDirectory `"$ModulePath`" -Source $ToolFeedUrl";
+      Invoke-Expression "&`"$NuGetPath`" install `"$ModulePackagePath`" -ExcludeVersion -OutputDirectory `"$ModulePath`" -Source $ToolFeedUrl";
   }else{
-      Invoke-Expression "$NuGetPath install `"$ModulePackagePath`" -ExcludeVersion -OutputDirectory `"$ModulePath`"";
+      Invoke-Expression "&`"$NuGetPath`" install `"$ModulePackagePath`" -ExcludeVersion -OutputDirectory `"$ModulePath`"";
   }
 }
 if (!(Test-Path $CakePath)) {
   # Install Cake if not part of packages.config.
   Write-Host "Installing Cake...";
   if($ToolFeedUrl -ne ""){
-      Invoke-Expression "$NuGetPath install Cake -ExcludeVersion -OutputDirectory `"$ToolPath`" -Source $ToolFeedUrl";
+      Invoke-Expression "&`"$NuGetPath`" install Cake -ExcludeVersion -OutputDirectory `"$ToolPath`" -Source $ToolFeedUrl";
   }else{
-      Invoke-Expression "$NuGetPath install Cake -ExcludeVersion -OutputDirectory `"$ToolPath`"";
+      Invoke-Expression "&`"$NuGetPath`" install Cake -ExcludeVersion -OutputDirectory `"$ToolPath`"";
   }
 }
 Pop-Location;
