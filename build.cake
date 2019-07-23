@@ -109,7 +109,28 @@ Task("Package-Extension")
     .IsDependentOn("Clean")
     .Does(() =>
 {
+    var buildTempDir = Directory("./build-temp");
     var buildResultDir = Directory("./build-results");
+
+    var vstsTaskSdkVersion = "0.11.0";
+
+    NuGetInstall("VstsTaskSdk", new NuGetInstallSettings {
+        NoCache = true,
+        OutputDirectory = buildTempDir,
+        Source = new [] { "https://www.powershellgallery.com/api/v2/ "},
+        Version = vstsTaskSdkVersion
+    });
+
+    var sourceDirectory = buildTempDir.Path + "/VstsTaskSdk." + vstsTaskSdkVersion;
+    var destinationDirectory = buildResultDir.Path + "/ps_modules/VstsTaskSdk";
+
+    EnsureDirectoryExists(destinationDirectory);
+    CopyFiles(sourceDirectory + "/*.dll", destinationDirectory);
+    CopyFiles(sourceDirectory + "/*.ps1", destinationDirectory);
+    CopyFiles(sourceDirectory + "/*.psd1", destinationDirectory);
+    CopyFiles(sourceDirectory + "/*.psm1", destinationDirectory);
+    CopyFiles(sourceDirectory + "/lib.json", destinationDirectory);
+    CopyDirectory(sourceDirectory + "/Strings", destinationDirectory + "/Strings");
 
     TfxExtensionCreate(new TfxExtensionCreateSettings()
     {
