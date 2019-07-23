@@ -1,27 +1,16 @@
-Param(
-    [string]$Script,
-    [string]$Target,
-    [string]$Verbosity,
-    [string]$Arguments,
-    [string]$useBuildAgentNuGetExe,
-    [string]$nugetExeDownloadLocation,
-    [string]$ToolFeedUrl
-)
-
-Write-Verbose "Parameters:";
-foreach($key in $PSBoundParameters.Keys)
-{
-    Write-Verbose ($key + ' = ' + $PSBoundParameters[$key]);
-}
+$Script = Get-VstsInput -Name Script -Require;
+$Target = Get-VstsInput -Name Target -Require;
+$Verbosity = Get-VstsInput -Name Verbosity -Require;
+$Arguments = Get-VstsInput -Name Arguments;
+$useBuildAgentNuGetExe = Get-VstsInput -Name useBuildAgentNuGetExe -AsBool;
+$nugetExeDownloadLocation = Get-VstsInput -Name nugetExeDownloadLocation;
+$ToolFeedUrl = Get-VstsInput -Name ToolFeedUrl;
 
 try {
   $useBuildAgentNuGetExeBool = [System.Convert]::ToBoolean($useBuildAgentNuGetExe) 
 } catch [FormatException] {
   $useBuildAgentNuGetExeBool = $false
 }
-
-Import-Module "Microsoft.TeamFoundation.DistributedTask.Task.Internal";
-Import-Module "Microsoft.TeamFoundation.DistributedTask.Task.Common";
 
 $RootPath = Split-Path -parent $Script;
 $ToolPath = Join-Path $RootPath "tools";
@@ -112,4 +101,4 @@ if (!(Test-Path $CakePath)) {
 
 # Start Cake
 Write-Host "Executing build script...";
-Invoke-Tool -Path $CakePath -Arguments "`"$Script`" -target=`"$Target`" -verbosity=`"$Verbosity`" --paths_tools=`"$ToolPath`" $Arguments";
+Invoke-VstsTool -FileName $CakePath -Arguments "`"$Script`" -target=`"$Target`" -verbosity=`"$Verbosity`" --paths_tools=`"$ToolPath`" $Arguments" -RequireExitCodeZero;
