@@ -1,79 +1,85 @@
 {
-    "manifestVersion": 1,
-    "id": "cake",
-    "name": "Cake",
-    "version": "0.1.7",
-    "publisher": "cake-build",
-    "description": "Tools for building with Cake.",
-    "public": true,
-    "targets": [
-        {
-            "id": "Microsoft.VisualStudio.Services"
-        }
-    ],
-    "categories": [
-        "Build and release"
-    ],
-    "tags": [
-      "cake", "cake build", "build", "scripting"
-    ],
-    "screenshots": [
-        {
-            "path": "Images/configurebuildstep-screenshot.png"
-        }
-    ],
-    "icons": {
-        "default": "extension-icon.png"
+  "manifestVersion": 1,
+  "id": "cake",
+  "name": "Cake",
+  "version": "0.1.7",
+  "publisher": "cake-build",
+  "description": "Tools for building with Cake.",
+  "public": true,
+  "targets": [
+    {
+      "id": "Microsoft.VisualStudio.Services"
+    }
+  ],
+  "categories": [
+    "Azure Pipelines"
+  ],
+  "tags": [
+    "cake",
+    "cake build",
+    "build",
+    "scripting"
+  ],
+  "screenshots": [
+    {
+      "path": "Images/configurebuildstep-screenshot.png"
+    }
+  ],
+  "icons": {
+    "default": "extension-icon.png"
+  },
+  "files": [
+    {
+      "path": "Task"
     },
-    "files": [
-        {
-            "path": "Task"
-        },
-        {
-            "path": "Images",
-            "addressable": true
-        }
-    ],
-    "content": {
-        "details":
-        {
-            "path": "extension-details.md"
-        }
+    {
+      "path": "Images",
+      "addressable": true
     },
-    "links": {
-        "home": {
-            "uri": "https://cakebuild.net"
-        },
-        "getstarted": {
-            "uri": "https://cakebuild.net/docs/build-systems/azure-devops"
-        },
-        "learn": {
-            "uri": "https://cakebuild.net/docs"
-        },
-        "issues": {
-            "uri": "https://github.com/cake-build/cake-vso/issues"
-        },
-        "license": {
-            "uri": "https://github.com/cake-build/cake-vso/blob/develop/LICENSE"
-        },
-        "repository": {
-            "uri": "http://github.com/cake-build/cake-vso"
-        }
+    {
+      "path": "build-temp/VstsTaskSdk.0.11.0",
+      "packagePath": "Task/ps_modules/VstsTaskSdk"
+    }
+  ],
+  "content": {
+    "details": {
+      "path": "extension-details.md"
+    }
+  },
+  "links": {
+    "home": {
+      "uri": "https://cakebuild.net"
     },
-    "branding": {
-        "color": "rgb(255, 224, 92)",
-        "theme": "light"
+    "getstarted": {
+      "uri": "https://cakebuild.net/docs/build-systems/azure-devops"
     },
-    "contributions": [
-        {
-            "id": "cake-build-task",
-            "type": "ms.vss-distributed-task.task",
-            "targets": [
-                "ms.vss-distributed-task.tasks"
-            ],
-            "properties": {
-                "name": "Task"
-            }
-        }
-    ]
+    "learn": {
+      "uri": "https://cakebuild.net/docs"
+    },
+    "issues": {
+      "uri": "https://github.com/cake-build/cake-vso/issues"
+    },
+    "license": {
+      "uri": "https://github.com/cake-build/cake-vso/blob/develop/LICENSE"
+    },
+    "repository": {
+      "uri": "http://github.com/cake-build/cake-vso"
+    }
+  },
+  "branding": {
+    "color": "rgb(255, 224, 92)",
+    "theme": "light"
+  },
+  "contributions": [
+    {
+      "id": "cake-build-task",
+      "type": "ms.vss-distributed-task.task",
+      "targets": [
+        "ms.vss-distributed-task.tasks"
+      ],
+      "properties": {
+        "name": "Task"
+      }
+    }
+  ]
 }

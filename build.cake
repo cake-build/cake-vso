@@ -57,7 +57,7 @@ Setup(context =>
 Task("Clean")
     .Does(() =>
 {
-    CleanDirectories(new[] { "./build-results" });
+    CleanDirectories(new[] { "./build-results", "./build-temp" });
 });
 
 Task("Install-Tfx-Cli")
@@ -120,17 +120,6 @@ Task("Package-Extension")
         Source = new [] { "https://www.powershellgallery.com/api/v2/ "},
         Version = vstsTaskSdkVersion
     });
-
-    var sourceDirectory = buildTempDir.Path + "/VstsTaskSdk." + vstsTaskSdkVersion;
-    var destinationDirectory = buildResultDir.Path + "/ps_modules/VstsTaskSdk";
-
-    EnsureDirectoryExists(destinationDirectory);
-    CopyFiles(sourceDirectory + "/*.dll", destinationDirectory);
-    CopyFiles(sourceDirectory + "/*.ps1", destinationDirectory);
-    CopyFiles(sourceDirectory + "/*.psd1", destinationDirectory);
-    CopyFiles(sourceDirectory + "/*.psm1", destinationDirectory);
-    CopyFiles(sourceDirectory + "/lib.json", destinationDirectory);
-    CopyDirectory(sourceDirectory + "/Strings", destinationDirectory + "/Strings");
 
     TfxExtensionCreate(new TfxExtensionCreateSettings()
     {
