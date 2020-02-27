@@ -25,7 +25,7 @@ public class BuildVersion
         string minor = null;
         string patch = null;
 
-        if (context.IsRunningOnWindows() && !parameters.SkipGitVersion)
+        if (!parameters.SkipGitVersion)
         {
             context.Information("Calculating Semantic Version");
             if (!parameters.IsLocalBuild || parameters.IsPublishBuild || parameters.IsReleaseBuild)
