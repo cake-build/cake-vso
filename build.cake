@@ -57,7 +57,7 @@ Setup(context =>
 Task("Clean")
     .Does(() =>
 {
-    CleanDirectories(new[] { "./build-results" });
+    CleanDirectories(new[] { "./build-results", "./build-temp" });
 });
 
 Task("Install-Tfx-Cli")
@@ -109,7 +109,17 @@ Task("Package-Extension")
     .IsDependentOn("Clean")
     .Does(() =>
 {
+    var buildTempDir = Directory("./build-temp");
     var buildResultDir = Directory("./build-results");
+
+    var vstsTaskSdkVersion = "0.11.0";
+
+    NuGetInstall("VstsTaskSdk", new NuGetInstallSettings {
+        NoCache = true,
+        OutputDirectory = buildTempDir,
+        Source = new [] { "https://www.powershellgallery.com/api/v2/ "},
+        Version = vstsTaskSdkVersion
+    });
 
     TfxExtensionCreate(new TfxExtensionCreateSettings()
     {

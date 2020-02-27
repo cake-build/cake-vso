@@ -94,7 +94,7 @@
     }
   ],
   "execution": {
-    "PowerShell": {
+    "PowerShell3": {
       "target": "$(currentDirectory)\\Cake.ps1",
       "argumentFormat": "",
       "workingDirectory": "$(currentDirectory)"

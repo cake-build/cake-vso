@@ -2,6 +2,7 @@
 
 # Build related
 build-results/
+build-temp/
 tools/Cake/
 tools/nuget.exe
 tools/gitreleasemanager/
