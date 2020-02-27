@@ -6,7 +6,7 @@
 #addin "nuget:?package=Cake.Tfx&version=0.4.2"
 #addin "nuget:?package=Cake.Npm&version=0.7.2"
 #addin "nuget:?package=Cake.Gitter&version=0.10.0"
-#addin "nuget:?package=Cake.Twitter&version=0.9.0
+#addin "nuget:?package=Cake.Twitter&version=0.9.0"
 
 //////////////////////////////////////////////////////////////////////
 // TOOLS
