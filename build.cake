@@ -87,10 +87,22 @@ Task("Clean")
     CleanDirectories(new[] { "./build-results", "./build-temp" });
 });
 
+Task("Npm-Install")
+    .Does(() =>
+{
+    var settings = new NpmInstallSettings();
+    settings.LogLevel = NpmLogLevel.Silent;
+    NpmInstall(settings);
+});
+
 Task("Install-Tfx-Cli")
     .Does(() =>
 {
-    Npm.WithLogLevel(NpmLogLevel.Silent).FromPath(".").Install(settings => settings.Package("tfx-cli").Globally());
+    var settings = new NpmInstallSettings();
+    settings.Global = true;
+    settings.AddPackage("tfx-cli", "0.6.3");
+    settings.LogLevel = NpmLogLevel.Silent;
+    NpmInstall(settings);
 });
 
 Task("Create-Release-Notes")
@@ -132,6 +144,7 @@ Task("Update-Json-Versions")
 
 Task("Package-Extension")
     .IsDependentOn("Update-Json-Versions")
+    .IsDependentOn("Npm-Install")
     .IsDependentOn("Install-Tfx-Cli")
     .IsDependentOn("Clean")
     .Does(() =>
