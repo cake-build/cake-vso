@@ -5,6 +5,8 @@
 #addin "nuget:?package=MagicChunks&version=1.1.0.34"
 #addin "nuget:?package=Cake.Tfx&version=0.4.2"
 #addin "nuget:?package=Cake.Npm&version=0.7.2"
+#addin "nuget:?package=Cake.Gitter&version=0.10.0"
+#addin "nuget:?package=Cake.Twitter&version=0.9.0
 
 //////////////////////////////////////////////////////////////////////
 // TOOLS
@@ -15,6 +17,8 @@
 
 // Load other scripts.
 #load "./build/parameters.cake"
+#load "./build/gitter.cake"
+#load "./build/twitter.cake"
 
 //////////////////////////////////////////////////////////////////////
 // PARAMETERS
@@ -37,7 +41,7 @@ Setup(context =>
     );
 
     // Increase verbosity?
-    if(parameters.IsMasterCakeVsoBranch && (context.Log.Verbosity != Verbosity.Diagnostic)) {
+    if(parameters.IsMasterBranch && (context.Log.Verbosity != Verbosity.Diagnostic)) {
         Information("Increasing verbosity to diagnostic.");
         context.Log.Verbosity = Verbosity.Diagnostic;
     }
@@ -48,6 +52,29 @@ Setup(context =>
         parameters.Target,
         parameters.Version.CakeVersion,
         parameters.IsTagged);
+});
+
+Teardown(context =>
+{
+    Information("Starting Teardown...");
+
+    if(context.Successful)
+    {
+        if(!parameters.IsLocalBuild && !parameters.IsPullRequest && parameters.IsMasterRepo && (parameters.IsMasterBranch || ((parameters.IsReleaseBranch || parameters.IsHotFixBranch))) && parameters.IsTagged)
+        {
+            if(parameters.CanPostToTwitter)
+            {
+                SendMessageToTwitter();
+            }
+
+            if(parameters.CanPostToGitter)
+            {
+                SendMessageToGitterRoom();
+            }
+        }
+    }
+
+    Information("Finished running tasks.");
 });
 
 //////////////////////////////////////////////////////////////////////
