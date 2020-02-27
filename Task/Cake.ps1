@@ -1,18 +1,10 @@
-Param(
-    [string]$Script,
-    [string]$Target,
-    [string]$Verbosity,
-    [string]$Arguments,
-    [string]$useBuildAgentNuGetExe,
-    [string]$nugetExeDownloadLocation,
-    [string]$ToolFeedUrl
-)
-
-Write-Verbose "Parameters:";
-foreach($key in $PSBoundParameters.Keys)
-{
-    Write-Verbose ($key + ' = ' + $PSBoundParameters[$key]);
-}
+$Script = Get-VstsInput -Name Script -Require;
+$Target = Get-VstsInput -Name Target -Require;
+$Verbosity = Get-VstsInput -Name Verbosity -Require;
+$Arguments = Get-VstsInput -Name Arguments;
+$useBuildAgentNuGetExe = Get-VstsInput -Name useBuildAgentNuGetExe -AsBool;
+$nugetExeDownloadLocation = Get-VstsInput -Name nugetExeDownloadLocation;
+$ToolFeedUrl = Get-VstsInput -Name ToolFeedUrl;
 
 try {
   $useBuildAgentNuGetExeBool = [System.Convert]::ToBoolean($useBuildAgentNuGetExe) 
@@ -20,12 +12,11 @@ try {
   $useBuildAgentNuGetExeBool = $false
 }
 
-Import-Module "Microsoft.TeamFoundation.DistributedTask.Task.Internal";
-Import-Module "Microsoft.TeamFoundation.DistributedTask.Task.Common";
-
 $RootPath = Split-Path -parent $Script;
 $ToolPath = Join-Path $RootPath "tools";
 $PackagePath = Join-Path $ToolPath "packages.config";
+$ModulePath = Join-Path $ToolPath "Modules";
+$ModulePackagePath = Join-Path $ModulePath "packages.config";
 $CakePath = Join-Path $ToolPath "Cake/Cake.exe";
 $NuGetPath = Join-Path $ToolPath "nuget.exe";
 
@@ -33,6 +24,7 @@ Write-Verbose "=============================================="
 Write-Verbose "Root = $RootPath";
 Write-Verbose "Tools = $ToolPath";
 Write-Verbose "Packages = $PackagePath";
+Write-Verbose "Modules = $ModulePath";
 Write-Verbose "Cake = $CakePath";
 Write-Verbose "NuGet = $NuGetPath";
 Write-Verbose "=============================================="
@@ -77,18 +69,27 @@ if ((Test-Path $PackagePath)) {
   # Install tools in packages.config.
   Write-Host "Restoring packages...";
   if($ToolFeedUrl -ne ""){
-      Invoke-Expression "$NuGetPath install `"$PackagePath`" -ExcludeVersion -OutputDirectory `"$ToolPath`" -Source $ToolFeedUrl";
+      Invoke-Expression "&`"$NuGetPath`" install `"$PackagePath`" -ExcludeVersion -OutputDirectory `"$ToolPath`" -Source $ToolFeedUrl";
   }else{
-      Invoke-Expression "$NuGetPath install `"$PackagePath`" -ExcludeVersion -OutputDirectory `"$ToolPath`"";
+      Invoke-Expression "&`"$NuGetPath`" install `"$PackagePath`" -ExcludeVersion -OutputDirectory `"$ToolPath`"";
+  }
+}
+if ((Test-Path $ModulePackagePath)) {
+  # Install tools in Modules/packages.config
+  Write-Host "Installing modules..."
+  if($ToolFeedUrl -ne ""){
+      Invoke-Expression "&`"$NuGetPath`" install `"$ModulePackagePath`" -ExcludeVersion -OutputDirectory `"$ModulePath`" -Source $ToolFeedUrl";
+  }else{
+      Invoke-Expression "&`"$NuGetPath`" install `"$ModulePackagePath`" -ExcludeVersion -OutputDirectory `"$ModulePath`"";
   }
 }
 if (!(Test-Path $CakePath)) {
   # Install Cake if not part of packages.config.
   Write-Host "Installing Cake...";
   if($ToolFeedUrl -ne ""){
-      Invoke-Expression "$NuGetPath install Cake -ExcludeVersion -OutputDirectory `"$ToolPath`" -Source $ToolFeedUrl";
+      Invoke-Expression "&`"$NuGetPath`" install Cake -ExcludeVersion -OutputDirectory `"$ToolPath`" -Source $ToolFeedUrl";
   }else{
-      Invoke-Expression "$NuGetPath install Cake -ExcludeVersion -OutputDirectory `"$ToolPath`"";
+      Invoke-Expression "&`"$NuGetPath`" install Cake -ExcludeVersion -OutputDirectory `"$ToolPath`"";
   }
 }
 Pop-Location;
@@ -100,4 +101,4 @@ if (!(Test-Path $CakePath)) {
 
 # Start Cake
 Write-Host "Executing build script...";
-Invoke-Tool -Path $CakePath -Arguments "`"$Script`" -target=`"$Target`" -verbosity=`"$Verbosity`" --paths_tools=`"$ToolPath`" $Arguments";
+Invoke-VstsTool -FileName $CakePath -Arguments "`"$Script`" -target=`"$Target`" -verbosity=`"$Verbosity`" --paths_tools=`"$ToolPath`" $Arguments" -RequireExitCodeZero;

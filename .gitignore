@@ -2,9 +2,7 @@
 
 # Build related
 build-results/
-tools/Cake/
-tools/nuget.exe
-tools/gitreleasemanager/
-tools/GitVersion.CommandLine/
-tools/Addins/
-tools/packages.config.md5sum
+build-temp/
+tools/**
+!tools/packages.config
+.DS_Store

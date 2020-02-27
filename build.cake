@@ -2,19 +2,24 @@
 // ADDINS
 //////////////////////////////////////////////////////////////////////
 
-#addin "nuget:?package=MagicChunks&version=1.1.0.34"
+#addin "nuget:?package=MagicChunks&version=2.0.0.119"
 #addin "nuget:?package=Cake.Tfx&version=0.4.2"
-#addin "nuget:?package=Cake.Npm&version=0.7.2"
+#addin "nuget:?package=Cake.Npm&version=0.10.0"
+#addin "nuget:?package=Cake.AppVeyor&version=1.1.0.9"
+#addin "nuget:?package=Cake.Gitter&version=0.10.0"
+#addin "nuget:?package=Cake.Twitter&version=0.9.0"
 
 //////////////////////////////////////////////////////////////////////
 // TOOLS
 //////////////////////////////////////////////////////////////////////
 
-#tool "nuget:?package=gitreleasemanager&version=0.6.0"
+#tool "nuget:?package=gitreleasemanager&version=0.10.3"
 #tool "nuget:?package=GitVersion.CommandLine&version=3.6.4"
 
 // Load other scripts.
 #load "./build/parameters.cake"
+#load "./build/gitter.cake"
+#load "./build/twitter.cake"
 
 //////////////////////////////////////////////////////////////////////
 // PARAMETERS
@@ -37,7 +42,7 @@ Setup(context =>
     );
 
     // Increase verbosity?
-    if(parameters.IsMasterCakeVsoBranch && (context.Log.Verbosity != Verbosity.Diagnostic)) {
+    if(parameters.IsMasterBranch && (context.Log.Verbosity != Verbosity.Diagnostic)) {
         Information("Increasing verbosity to diagnostic.");
         context.Log.Verbosity = Verbosity.Diagnostic;
     }
@@ -50,6 +55,29 @@ Setup(context =>
         parameters.IsTagged);
 });
 
+Teardown(context =>
+{
+    Information("Starting Teardown...");
+
+    if(context.Successful)
+    {
+        if(!parameters.IsLocalBuild && !parameters.IsPullRequest && parameters.IsMasterRepo && (parameters.IsMasterBranch || ((parameters.IsReleaseBranch || parameters.IsHotFixBranch))) && parameters.IsTagged)
+        {
+            if(parameters.CanPostToTwitter)
+            {
+                SendMessageToTwitter();
+            }
+
+            if(parameters.CanPostToGitter)
+            {
+                SendMessageToGitterRoom();
+            }
+        }
+    }
+
+    Information("Finished running tasks.");
+});
+
 //////////////////////////////////////////////////////////////////////
 // TASKS
 //////////////////////////////////////////////////////////////////////
@@ -57,13 +85,25 @@ Setup(context =>
 Task("Clean")
     .Does(() =>
 {
-    CleanDirectories(new[] { "./build-results" });
+    CleanDirectories(new[] { "./build-results", "./build-temp" });
+});
+
+Task("Npm-Install")
+    .Does(() =>
+{
+    var settings = new NpmInstallSettings();
+    settings.LogLevel = NpmLogLevel.Silent;
+    NpmInstall(settings);
 });
 
 Task("Install-Tfx-Cli")
     .Does(() =>
 {
-    Npm.WithLogLevel(NpmLogLevel.Silent).FromPath(".").Install(settings => settings.Package("tfx-cli").Globally());
+    var settings = new NpmInstallSettings();
+    settings.Global = true;
+    settings.AddPackage("tfx-cli", "0.6.3");
+    settings.LogLevel = NpmLogLevel.Silent;
+    NpmInstall(settings);
 });
 
 Task("Create-Release-Notes")
@@ -105,17 +145,38 @@ Task("Update-Json-Versions")
 
 Task("Package-Extension")
     .IsDependentOn("Update-Json-Versions")
+    .IsDependentOn("Npm-Install")
     .IsDependentOn("Install-Tfx-Cli")
     .IsDependentOn("Clean")
     .Does(() =>
 {
+    var buildTempDir = Directory("./build-temp");
     var buildResultDir = Directory("./build-results");
+
+    var vstsTaskSdkVersion = "0.11.0";
+
+    NuGetInstall("VstsTaskSdk", new NuGetInstallSettings {
+        NoCache = true,
+        OutputDirectory = buildTempDir,
+        Source = new [] { "https://www.powershellgallery.com/api/v2/ "},
+        Version = vstsTaskSdkVersion
+    });
 
     TfxExtensionCreate(new TfxExtensionCreateSettings()
     {
         ManifestGlobs = new List<string>(){ "./extension-manifest.json" },
         OutputPath = buildResultDir
     });
+});
+
+Task("Upload-AppVeyor-Artifacts")
+    .IsDependentOn("Package-Extension")
+    .WithCriteria(() => parameters.IsRunningOnAppVeyor)
+.Does(() =>
+{
+    var buildResultDir = Directory("./build-results");
+    var packageFile = File("cake-build.cake-" + parameters.Version.SemVersion + ".vsix");
+    AppVeyor.UploadArtifact(buildResultDir + packageFile);
 });
 
 Task("Publish-GitHub-Release")
@@ -162,6 +223,7 @@ Task("Default")
     .IsDependentOn("Package-Extension");
 
 Task("Appveyor")
+    .IsDependentOn("Upload-AppVeyor-Artifacts")
     .IsDependentOn("Publish-Extension")
     .IsDependentOn("Publish-GitHub-Release")
     .Finally(() =>
