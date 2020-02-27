@@ -5,6 +5,7 @@
 #addin "nuget:?package=MagicChunks&version=2.0.0.119"
 #addin "nuget:?package=Cake.Tfx&version=0.4.2"
 #addin "nuget:?package=Cake.Npm&version=0.10.0"
+#addin "nuget:?package=Cake.AppVeyor&version=1.1.0.9"
 #addin "nuget:?package=Cake.Gitter&version=0.10.0"
 #addin "nuget:?package=Cake.Twitter&version=0.9.0"
 
@@ -168,6 +169,16 @@ Task("Package-Extension")
     });
 });
 
+Task("Upload-AppVeyor-Artifacts")
+    .IsDependentOn("Package-Extension")
+    .WithCriteria(() => parameters.IsRunningOnAppVeyor)
+.Does(() =>
+{
+    var buildResultDir = Directory("./build-results");
+    var packageFile = File("cake-build.cake-" + parameters.Version.SemVersion + ".vsix");
+    AppVeyor.UploadArtifact(buildResultDir + packageFile);
+});
+
 Task("Publish-GitHub-Release")
     .WithCriteria(() => parameters.ShouldPublish)
     .Does(() =>
@@ -212,6 +223,7 @@ Task("Default")
     .IsDependentOn("Package-Extension");
 
 Task("Appveyor")
+    .IsDependentOn("Upload-AppVeyor-Artifacts")
     .IsDependentOn("Publish-Extension")
     .IsDependentOn("Publish-GitHub-Release")
     .Finally(() =>
