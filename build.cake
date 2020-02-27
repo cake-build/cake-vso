@@ -2,9 +2,9 @@
 // ADDINS
 //////////////////////////////////////////////////////////////////////
 
-#addin "nuget:?package=MagicChunks&version=1.1.0.34"
+#addin "nuget:?package=MagicChunks&version=2.0.0.119"
 #addin "nuget:?package=Cake.Tfx&version=0.4.2"
-#addin "nuget:?package=Cake.Npm&version=0.7.2"
+#addin "nuget:?package=Cake.Npm&version=0.10.0"
 #addin "nuget:?package=Cake.Gitter&version=0.10.0"
 #addin "nuget:?package=Cake.Twitter&version=0.9.0"
 
@@ -12,7 +12,7 @@
 // TOOLS
 //////////////////////////////////////////////////////////////////////
 
-#tool "nuget:?package=gitreleasemanager&version=0.6.0"
+#tool "nuget:?package=gitreleasemanager&version=0.7.1"
 #tool "nuget:?package=GitVersion.CommandLine&version=3.6.4"
 
 // Load other scripts.
