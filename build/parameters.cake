@@ -65,7 +65,7 @@ public class BuildParameters
     {
         get
         {
-            return "Version " + Version.SemVersion + " of the Cake Azure DevOps Extension has just been released, https://marketplace.visualstudio.com/items/cake-build.cake. @AzureDevOps @chocolateynuget #AzureDevOps #Azure  Full release notes: https://github.com/cake-build/cake-vso/releases/tag/" + Version.SemVersion;
+            return "Version " + Version.SemVersion + " of the Cake Azure DevOps Extension has just been released, https://marketplace.visualstudio.com/items/cake-build.cake. @AzureDevOps @cakebuildnet #AzureDevOps #Azure  Full release notes: https://github.com/cake-build/cake-vso/releases/tag/" + Version.SemVersion;
         }
     }
 
