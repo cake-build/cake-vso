@@ -51,7 +51,7 @@ if (!(Test-Path $NuGetPath)) {
   $NuGetPath = Join-Path $ToolPath "nuget.exe";
 
   # If we haven't been given a custom nuget.exe download location then download the latest version from nuget.org.
-  if($null -eq $nugetExeDownloadLocation) {
+  if(-Not $nugetExeDownloadLocation) {
       $nugetExeDownloadLocation = "https://dist.nuget.org/win-x86-commandline/latest/nuget.exe"
   }
   Write-Verbose "Getting nuget.exe from $nugetExeDownloadLocation"
