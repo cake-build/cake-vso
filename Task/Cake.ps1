@@ -41,7 +41,7 @@ if (!(Test-Path $ToolPath)) {
 if($useBuildAgentNuGetExeBool)
 {
     Write-Host "Using Build Agent nuget.exe";
-    $nugetExeDownloadLocation = Get-ToolPath -Name 'NuGet.exe';
+    $nugetExeDownloadLocation = (Get-Command nuget -ErrorAction SilentlyContinue).Source;
 }
 
 # Make sure NuGet exist.
