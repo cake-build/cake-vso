@@ -7,7 +7,7 @@ $nugetExeDownloadLocation = Get-VstsInput -Name nugetExeDownloadLocation;
 $ToolFeedUrl = Get-VstsInput -Name ToolFeedUrl;
 
 try {
-  $useBuildAgentNuGetExeBool = [System.Convert]::ToBoolean($useBuildAgentNuGetExe) 
+  $useBuildAgentNuGetExeBool = [System.Convert]::ToBoolean($useBuildAgentNuGetExe)
 } catch [FormatException] {
   $useBuildAgentNuGetExeBool = $false
 }
@@ -41,7 +41,7 @@ if (!(Test-Path $ToolPath)) {
 if($useBuildAgentNuGetExeBool)
 {
     Write-Host "Using Build Agent nuget.exe";
-    $nugetExeDownloadLocation = Get-ToolPath -Name 'NuGet.exe';
+    $nugetExeDownloadLocation = (Get-Command nuget -ErrorAction SilentlyContinue).Source;
 }
 
 # Make sure NuGet exist.
@@ -49,7 +49,7 @@ if (!(Test-Path $NuGetPath)) {
   # Download NuGet.exe.
   # Reset $NuGetPath incase we changed it above.
   $NuGetPath = Join-Path $ToolPath "nuget.exe";
-  
+
   # If we haven't been given a custom nuget.exe download location then download the latest version from nuget.org.
   if($nugetExeDownloadLocation -eq "") {
       $nugetExeDownloadLocation = "https://dist.nuget.org/win-x86-commandline/latest/nuget.exe"
