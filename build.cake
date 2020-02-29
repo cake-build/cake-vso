@@ -109,7 +109,7 @@ Task("Install-Tfx-Cli")
 Task("Create-Release-Notes")
     .Does(() =>
 {
-    GitReleaseManagerCreate(parameters.GitHub.UserName, parameters.GitHub.Password, "cake-build", "cake-vso", new GitReleaseManagerCreateSettings {
+    GitReleaseManagerCreate(parameters.GitHub.Token, "cake-build", "cake-vso", new GitReleaseManagerCreateSettings {
         Milestone         = parameters.Version.Milestone,
         Name              = parameters.Version.Milestone,
         Prerelease        = true,
@@ -186,8 +186,8 @@ Task("Publish-GitHub-Release")
     var buildResultDir = Directory("./build-results");
     var packageFile = File("cake-build.cake-" + parameters.Version.SemVersion + ".vsix");
 
-    GitReleaseManagerAddAssets(parameters.GitHub.UserName, parameters.GitHub.Password, "cake-build", "cake-vso", parameters.Version.Milestone, buildResultDir + packageFile);
-    GitReleaseManagerClose(parameters.GitHub.UserName, parameters.GitHub.Password, "cake-build", "cake-vso", parameters.Version.Milestone);
+    GitReleaseManagerAddAssets(parameters.GitHub.Token, "cake-build", "cake-vso", parameters.Version.Milestone, buildResultDir + packageFile);
+    GitReleaseManagerClose(parameters.GitHub.Token, "cake-build", "cake-vso", parameters.Version.Milestone);
 })
 .OnError(exception =>
 {

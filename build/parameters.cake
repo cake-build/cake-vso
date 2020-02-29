@@ -104,8 +104,7 @@ public class BuildParameters
                 !string.IsNullOrWhiteSpace(buildSystem.AppVeyor.Environment.Repository.Tag.Name)
             ),
             GitHub = new BuildCredentials (
-                userName: context.EnvironmentVariable("CAKEVSO_GITHUB_USERNAME"),
-                password: context.EnvironmentVariable("CAKEVSO_GITHUB_PASSWORD")
+                token: context.EnvironmentVariable("CAKEVSO_GITHUB_TOKEN")
             ),
             Marketplace = new VisualStudioMarketplaceCredentials (
                 token: context.EnvironmentVariable("CAKEVSO_VSMARKETPLACE_TOKEN")
@@ -137,13 +136,11 @@ public class BuildParameters
 
 public class BuildCredentials
 {
-    public string UserName { get; private set; }
-    public string Password { get; private set; }
+    public string Token { get; private set; }
 
-    public BuildCredentials(string userName, string password)
+    public BuildCredentials(string token)
     {
-        UserName = userName;
-        Password = password;
+        Token = token;
     }
 }
 
