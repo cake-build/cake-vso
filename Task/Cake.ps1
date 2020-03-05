@@ -99,6 +99,12 @@ if (!(Test-Path $CakePath)) {
     Throw "Could not find Cake.exe at $CakePath";
 }
 
+# Continue on error tool exit code determins result
+$global:ErrorActionPreference = 'Continue'
+
 # Start Cake
 Write-Host "Executing build script...";
 Invoke-VstsTool -FileName $CakePath -Arguments "`"$Script`" -target=`"$Target`" -verbosity=`"$Verbosity`" --paths_tools=`"$ToolPath`" $Arguments" -RequireExitCodeZero;
+if ($LASTEXITCODE -ne 0) {
+      Write-VstsSetResult -Result Failed -DoNotThrow
+}
