@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{9e44ad09-2e60-4d69-ac5b-e9dc3a960040}</ProjectGuid>
+    <ProjectHome>.</ProjectHome>
+    <ProjectView>ShowAllFiles</ProjectView>
+    <StartupFile />
+    <WorkingDirectory>.</WorkingDirectory>
+    <OutputPath>.</OutputPath>
+    <ProjectTypeGuids>{3AF33F2E-1136-4D97-BBB7-1795711AC8B8};{349c5851-65df-11da-9384-00065b846f21};{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}</ProjectTypeGuids>
+    <EnableTypeScript>true</EnableTypeScript>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">16.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
+  <ItemGroup>
+    <Content Include=".editorconfig" />
+    <Content Include=".github\ISSUE_TEMPLATE.md" />
+    <Content Include=".github\PULL_REQUEST_TEMPLATE.md" />
+    <Content Include=".gitignore" />
+    <Content Include="appveyor.yml" />
+    <Content Include="build.cake" />
+    <Content Include="build.ps1" />
+    <Content Include="build.sh" />
+    <Content Include="build\gitter.cake" />
+    <Content Include="build\parameters.cake" />
+    <Content Include="build\twitter.cake" />
+    <Content Include="build\version.cake" />
+    <Content Include="cake.config" />
+    <Content Include="extension-icon.png" />
+    <Content Include="extension-manifest.json" />
+    <Content Include="GitReleaseManager.yaml" />
+    <Content Include="package.json" />
+    <None Include="tools\packages.config" />
+    <None Include="tsconfig.json" />
+    <Content Include="CODEOFCONDUCT.md" />
+    <Content Include="CONTRIBUTING.md" />
+    <Content Include="extension-details.md" />
+    <Content Include="README.md" />
+    <Content Include="Images\addbuildstep.png" />
+    <Content Include="Images\addtasks.png" />
+    <Content Include="Images\configureadvanced.png" />
+    <Content Include="Images\configurebuildstep-screenshot.png" />
+    <Content Include="Images\configurebuildstep.png" />
+    <None Include="src\cake.ts" />
+    <Content Include="Task\Cake.ps1" />
+    <Content Include="Task\icon.png" />
+    <Content Include="Task\icon.svg" />
+    <Content Include="Task\task.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include=".github\" />
+    <Folder Include="build" />
+    <Folder Include="Images" />
+    <Folder Include="src" />
+    <Folder Include="Task" />
+    <Folder Include="tools" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsToolsV2.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:48022/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>True</UseCustomServer>
+          <CustomServerUrl>http://localhost:1337</CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}" User="">
+        <WebProjectProperties>
+          <StartPageUrl>
+          </StartPageUrl>
+          <StartAction>CurrentPage</StartAction>
+          <AspNetDebugging>True</AspNetDebugging>
+          <SilverlightDebugging>False</SilverlightDebugging>
+          <NativeDebugging>False</NativeDebugging>
+          <SQLDebugging>False</SQLDebugging>
+          <ExternalProgram>
+          </ExternalProgram>
+          <StartExternalURL>
+          </StartExternalURL>
+          <StartCmdLineArguments>
+          </StartCmdLineArguments>
+          <StartWorkingDirectory>
+          </StartWorkingDirectory>
+          <EnableENC>False</EnableENC>
+          <AlwaysStartWebServerOnDebug>False</AlwaysStartWebServerOnDebug>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

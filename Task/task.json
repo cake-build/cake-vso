@@ -1,4 +1,4 @@
-{
+﻿{
   "id": "b88ea9a0-7d6e-11e5-b5de-d57d652482f7",
   "name": "Cake",
   "friendlyName": "Cake",
@@ -91,13 +91,37 @@
       "required": false,
       "helpMarkDown": "Use an alternate nuget package feed for cake and tools. Defaults to `nuget.org`",
       "groupName": "advanced"
+    },
+    {
+      "name": "Bootstrap",
+      "type": "boolean",
+      "label": "Bootstrap the cake script using the --bootstrap",
+      "defaultValue": "false",
+      "required": false,
+      "helpMarkDown": "Download/install modules defined by #module directives in the cake script file",
+      "groupName": "advanced"
+    },
+    {
+      "name": "Version",
+      "type": "string",
+      "label": "dotnet-cake Version",
+      "defaultValue": "",
+      "required": false,
+      "helpMarkDown": "Version of dotnet-cake to use for running the script. Only valid on cross-platform node agent. Defaults to latest version.",
+      "groupName": "advanced"
     }
   ],
   "execution": {
     "PowerShell3": {
       "target": "$(currentDirectory)\\Cake.ps1",
       "argumentFormat": "",
-      "workingDirectory": "$(currentDirectory)"
+      "workingDirectory": "$(currentDirectory)",
+      "platforms": [
+        "windows"
+      ]
+    },
+    "Node": {
+      "target": "$(currentDirectory)/index.js"
     }
   }
 }

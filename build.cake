@@ -96,12 +96,23 @@ Task("Npm-Install")
     NpmInstall(settings);
 });
 
+Task("Npm-Run-Build-Script")
+    .IsDependentOn("Npm-Install")
+    .Does(() =>
+{
+    var settings = new NpmRunScriptSettings();
+    settings.LogLevel = NpmLogLevel.Silent;
+    settings.ScriptName = "build";
+    NpmRunScript(settings);
+});
+
 Task("Install-Tfx-Cli")
     .Does(() =>
 {
     var settings = new NpmInstallSettings();
     settings.Global = true;
     settings.AddPackage("tfx-cli", "0.6.3");
+    settings.AddPackage("@zeit/ncc", "0.21.1");
     settings.LogLevel = NpmLogLevel.Silent;
     NpmInstall(settings);
 });
@@ -140,6 +151,13 @@ Task("Update-Json-Versions")
 
     TransformConfig(taskJson, taskJson, new TransformationCollection {
         { "version/Patch", parameters.Version.Patch }
+    });
+
+    var packageJson = "package.json";
+    Information("Updating {0} version -> {1}", packageJson, parameters.Version.SemVersion);
+
+    TransformConfig(packageJson, packageJson, new TransformationCollection {
+        { "version", parameters.Version.SemVersion }
     });
 });
 
