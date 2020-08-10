@@ -1,5 +1,5 @@
 # cake-vso
-Cake integration for TFS/VSTS.
+Cake integration for Azure DevOps.
 
 This extension contains a custom build task that runs Cake build scripts for you.
 
