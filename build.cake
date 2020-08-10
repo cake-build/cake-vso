@@ -3,11 +3,11 @@
 //////////////////////////////////////////////////////////////////////
 
 #addin "nuget:?package=MagicChunks&version=2.0.0.119"
-#addin "nuget:?package=Cake.Tfx&version=0.4.2"
-#addin "nuget:?package=Cake.Npm&version=0.10.0"
-#addin "nuget:?package=Cake.AppVeyor&version=1.1.0.9"
-#addin "nuget:?package=Cake.Gitter&version=0.10.0"
-#addin "nuget:?package=Cake.Twitter&version=0.9.0"
+#addin "nuget:?package=Cake.Tfx&version=0.9.1"
+#addin "nuget:?package=Cake.Npm&version=0.17.0"
+#addin "nuget:?package=Cake.AppVeyor&version=4.0.0"
+#addin "nuget:?package=Cake.Gitter&version=0.11.1"
+#addin "nuget:?package=Cake.Twitter&version=0.10.1"
 
 //////////////////////////////////////////////////////////////////////
 // TOOLS
@@ -109,7 +109,7 @@ Task("Install-Tfx-Cli")
 Task("Create-Release-Notes")
     .Does(() =>
 {
-    GitReleaseManagerCreate(parameters.GitHub.UserName, parameters.GitHub.Password, "cake-build", "cake-vso", new GitReleaseManagerCreateSettings {
+    GitReleaseManagerCreate(parameters.GitHub.Token, "cake-build", "cake-vso", new GitReleaseManagerCreateSettings {
         Milestone         = parameters.Version.Milestone,
         Name              = parameters.Version.Milestone,
         Prerelease        = true,
@@ -186,8 +186,8 @@ Task("Publish-GitHub-Release")
     var buildResultDir = Directory("./build-results");
     var packageFile = File("cake-build.cake-" + parameters.Version.SemVersion + ".vsix");
 
-    GitReleaseManagerAddAssets(parameters.GitHub.UserName, parameters.GitHub.Password, "cake-build", "cake-vso", parameters.Version.Milestone, buildResultDir + packageFile);
-    GitReleaseManagerClose(parameters.GitHub.UserName, parameters.GitHub.Password, "cake-build", "cake-vso", parameters.Version.Milestone);
+    GitReleaseManagerAddAssets(parameters.GitHub.Token, "cake-build", "cake-vso", parameters.Version.Milestone, buildResultDir + packageFile);
+    GitReleaseManagerClose(parameters.GitHub.Token, "cake-build", "cake-vso", parameters.Version.Milestone);
 })
 .OnError(exception =>
 {
