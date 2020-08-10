@@ -91,13 +91,29 @@
       "required": false,
       "helpMarkDown": "Use an alternate nuget package feed for cake and tools. Defaults to `nuget.org`",
       "groupName": "advanced"
+    },
+    {
+      "name": "Bootstrap",
+      "type": "boolean",
+      "label": "Bootstrap the cake script using the --bootstrap",
+      "defaultValue": "false",
+      "required": false,
+      "helpMarkDown": "Download/install modules defined by #module directives in the cake script file",
+      "groupName": "advanced"
+    },
+    {
+      "name": "Version",
+      "type": "string",
+      "label": "dotnet-cake Version",
+      "defaultValue": "",
+      "required": false,
+      "helpMarkDown": "Version of dotnet-cake to use for running the script. Defaults to latest version.",
+      "groupName": "advanced"
     }
   ],
   "execution": {
-    "PowerShell3": {
-      "target": "$(currentDirectory)\\Cake.ps1",
-      "argumentFormat": "",
-      "workingDirectory": "$(currentDirectory)"
+    "Node": {
+      "target": "$(currentDirectory)/index.js"
     }
   }
 }

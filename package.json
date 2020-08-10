@@ -1,0 +1,33 @@
+{
+  "name": "cake-task",
+  "version": "1.0.0",
+  "description": "Run a Cake script for your Azure DevOps build/release task.",
+  "main": "index.js",
+  "scripts": {
+    "build": "npm run transcompile && npm run bundle",
+    "transcompile": "tsc",
+    "bundle": "ncc build src/cake.ts -o Task",
+    "prestart": "npm run build",
+    "start": "node Task/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cake-build/cake-vso.git"
+  },
+  "keywords": [
+    "cake",
+    "cake-build",
+    "azure-devops"
+  ],
+  "author": "Cake Organization",
+  "license": "MIT",
+  "dependencies": {
+    "azure-pipelines-task-lib": "2.9.3"
+  },
+  "devDependencies": {
+    "@types/node": "12.12.6",
+    "@types/q": "1.5.2",
+    "@zeit/ncc": "0.21.1",
+    "typescript": "3.8.3"
+  }
+}
