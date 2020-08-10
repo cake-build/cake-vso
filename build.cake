@@ -97,7 +97,7 @@ Task("Npm-Install")
 });
 
 Task("Npm-Run-Build-Script")
-    .IsDependentOn("Npm-Install")
+    .IsDependentOn("Install-Npm-Packages")
     .Does(() =>
 {
     var settings = new NpmRunScriptSettings();
@@ -106,7 +106,8 @@ Task("Npm-Run-Build-Script")
     NpmRunScript(settings);
 });
 
-Task("Install-Tfx-Cli")
+Task("Install-Npm-Packages")
+    .IsDependentOn("Npm-Install")
     .Does(() =>
 {
     var settings = new NpmInstallSettings();
@@ -163,8 +164,7 @@ Task("Update-Json-Versions")
 
 Task("Package-Extension")
     .IsDependentOn("Update-Json-Versions")
-    .IsDependentOn("Npm-Install")
-    .IsDependentOn("Install-Tfx-Cli")
+    .IsDependentOn("Npm-Run-Build-Script")
     .IsDependentOn("Clean")
     .Does(() =>
 {
