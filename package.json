@@ -2,7 +2,7 @@
   "name": "cake-task",
   "version": "1.0.0",
   "description": "Run a Cake script for your Azure DevOps build/release task.",
-  "main": "cake.js",
+  "main": "index.js",
   "scripts": {
     "build": "npm run transcompile && npm run bundle",
     "transcompile": "tsc",
