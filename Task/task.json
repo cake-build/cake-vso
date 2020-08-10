@@ -1,4 +1,4 @@
-﻿{
+{
   "id": "b88ea9a0-7d6e-11e5-b5de-d57d652482f7",
   "name": "Cake",
   "friendlyName": "Cake",
@@ -107,19 +107,11 @@
       "label": "dotnet-cake Version",
       "defaultValue": "",
       "required": false,
-      "helpMarkDown": "Version of dotnet-cake to use for running the script. Only valid on cross-platform node agent. Defaults to latest version.",
+      "helpMarkDown": "Version of dotnet-cake to use for running the script. Defaults to latest version.",
       "groupName": "advanced"
     }
   ],
   "execution": {
-    "PowerShell3": {
-      "target": "$(currentDirectory)\\Cake.ps1",
-      "argumentFormat": "",
-      "workingDirectory": "$(currentDirectory)",
-      "platforms": [
-        "windows"
-      ]
-    },
     "Node": {
       "target": "$(currentDirectory)/index.js"
     }

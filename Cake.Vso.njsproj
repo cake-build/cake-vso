@@ -47,7 +47,6 @@
     <Content Include="Images\configurebuildstep-screenshot.png" />
     <Content Include="Images\configurebuildstep.png" />
     <None Include="src\cake.ts" />
-    <Content Include="Task\Cake.ps1" />
     <Content Include="Task\icon.png" />
     <Content Include="Task\icon.svg" />
     <Content Include="Task\task.json" />
