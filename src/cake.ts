@@ -12,9 +12,9 @@ async function run() {
     const $target = tl.getInput('target', true) || 'Default';
     const $verbosity = tl.getInput('verbosity', true) || 'Normal';
     const $arguments = tl.getInput('arguments') || '';
-    const $toolFeedUrl = tl.getInput('toolFeedUrl');
+    const $toolFeedUrl = tl.getInput('toolFeedUrl') || '';
     const $bootstrap = tl.getBoolInput('bootstrap') || false;
-    const $version = tl.getInput('version');
+    const $version = tl.getInput('version') || '';
 
     // Local Variables
     const rootPath = path.dirname(path.resolve($script));
@@ -65,7 +65,7 @@ async function run() {
 
     // Start Cake
     console.log('Executing build script...');
-    const exitCode = await tl.exec(cakeToolPath, `"${$script}" -target="${$target}" -verbosity="${$verbosity}" --paths_tools="${$toolPath}" ${$arguments}`);
+    const exitCode = await tl.exec(cakeToolPath, `"${$script}" --target="${$target}" --verbosity="${$verbosity}" --paths_tools="${$toolPath}" ${$arguments}`);
     if (exitCode !== 0) {
         throw new Error(`Failed to execute the build script. Exit code: ${exitCode}`);
     }
