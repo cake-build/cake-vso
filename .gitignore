@@ -2,7 +2,6 @@
 
 # Build related
 build-results/
-build-temp/
 tools/**
 !tools/packages.config
 .DS_Store
