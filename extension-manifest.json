@@ -35,10 +35,6 @@
     {
       "path": "Images",
       "addressable": true
-    },
-    {
-      "path": "build-temp/VstsTaskSdk.0.11.0",
-      "packagePath": "Task/ps_modules/VstsTaskSdk"
     }
   ],
   "content": {
