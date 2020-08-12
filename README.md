@@ -8,7 +8,7 @@ Cake (C# Make) is a cross platform build automation system with a C# DSL to do t
 Run Cake scripts easily
 -----------------------
 
-The Cake VSTS build tasks makes it easy to run a Cake script directly without having to invoke PowerShell or other commands line scripts. This makes it easy even for team members not familiar with Cake to add or adjust parameters passed to your build scripts.
+The Cake Azure DevOps build tasks makes it easy to run a Cake script directly without having to invoke PowerShell or other commands line scripts. This makes it easy even for team members not familiar with Cake to add or adjust parameters passed to your build scripts.
 
 How to use the build task
 -------------------------
@@ -20,8 +20,6 @@ After installing this extension, a new task will become available called "Cake T
 By default, the Cake build step (when added to a build) will try to run the `build.cake` build script (found in the root of your repository) with the target `Default`. If you wish to run another build script or build target you can change this in the build step settings.
 
 ![Configure Custom Build Step](https://raw.githubusercontent.com/cake-build/cake-vso/develop/Images/configurebuildstep.png)
-
-At the moment, only Windows build agents are supported, but we expect to add support for other build agents soon.
 
 Learn more
 ----------
