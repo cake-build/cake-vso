@@ -85,7 +85,7 @@ Teardown(context =>
 Task("Clean")
     .Does(() =>
 {
-    CleanDirectories(new[] { "./build-results", "./build-temp" });
+    CleanDirectories(new[] { "./build-results" });
 });
 
 Task("Npm-Install")
