@@ -10,7 +10,7 @@ async function run() {
     // Input Variables from Task
     const $script = tl.getInput('script', true) || 'build.cake';
     const $target = tl.getInput('target', true) || 'Default';
-    const $verbosity = tl.getInput('verbosity', true) || 'Normal';
+    let $verbosity = tl.getInput('verbosity', true) || 'Normal';
     const $arguments = tl.getInput('arguments') || '';
     const $toolFeedUrl = tl.getInput('toolFeedUrl') || '';
     const $bootstrap = tl.getBoolInput('bootstrap') || false;
@@ -21,11 +21,19 @@ async function run() {
     const $toolPath = path.join(rootPath, 'tools');
     const cakeToolPath = path.join($toolPath, tl.getPlatform() !== tl.Platform.Windows ? 'dotnet-cake' : 'dotnet-cake.exe');
 
+    const systemDiagnosticsRequested = tl.getVariable('system.debug');
+    if(systemDiagnosticsRequested) {
+        $verbosity = 'Diagnostic';
+    }
+
     console.log('=====================================================');
     console.log(`Root = ${rootPath}`);
     console.log(`Tools = ${$toolPath}`);
     console.log(`Cake Tool Path = ${cakeToolPath}`);
     console.log(`Package Feed = ${$toolFeedUrl}`);
+    if(systemDiagnosticsRequested) {
+        console.log(`running with system diagnostics`);
+    }
     console.log('=====================================================');
 
     // Check if there's a tools directory.
