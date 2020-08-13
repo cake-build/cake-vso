@@ -32,7 +32,7 @@ async function run() {
     console.log(`Cake Tool Path = ${cakeToolPath}`);
     console.log(`Package Feed = ${$toolFeedUrl}`);
     if(systemDiagnosticsRequested) {
-        console.log(`running with system diagnostics`);
+        console.log(`Running with system diagnostics`);
     }
     console.log('=====================================================');
 
