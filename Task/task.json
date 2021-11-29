@@ -112,7 +112,7 @@
     }
   ],
   "execution": {
-    "Node": {
+    "Node10": {
       "target": "$(currentDirectory)/index.js"
     }
   }

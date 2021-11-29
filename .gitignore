@@ -12,7 +12,7 @@ lib/**
 /Cake.AzureDevops.Task.njsproj.user
 
 Task/index.js
-
+Task/exec-child.js
 Task/lib.json
 
 obj/Debug/
@@ -24,3 +24,4 @@ bin/
 .taskkey
 
 .vs/
+
